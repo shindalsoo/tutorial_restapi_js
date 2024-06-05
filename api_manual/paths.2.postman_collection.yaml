@@ -1,0 +1,16 @@
+paths:
+  /api/postman_collection:
+    get:
+      tags:
+      - 환경부문
+      summary: PostMan해서 사용할 json 파일
+      description: PostMan에서 Load해서 사용할 json 파일을 요청하세요.
+      responses:
+        200:
+          description: Get all sessions for current user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSessionResponse'
+        403:
+          description: Forbidden

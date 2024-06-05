@@ -1,0 +1,7 @@
+tags:
+- name: 환경부문
+  description: 시스템 Configuration에 관련된 API입니다.
+- name: 관리자/사용자등록
+  description: 관리자가 API를 사용할 User를 등록합니다.
+- name: 인증 및 세션
+  description: 로그인 및 세션을 생성 및 관리합니다.

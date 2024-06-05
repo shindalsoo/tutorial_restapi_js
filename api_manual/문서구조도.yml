@@ -1,0 +1,106 @@
+openapi: '3.0.2'
+info:
+  title: 에코의 api documents ( OPEN API )
+  version: 1.0.0
+  description: '<b>Description:</b><br>
+    1. The part is divided into <b>Partner, and Console</b> <br>
+    2. You can call the API by receiving the <b>Auth token key</b> corresponding to each part and <b>registering it in Authorize</b><br>
+    3. You can check the <b>schema</b> to know the information you need to enter.'
+
+# api 서버
+servers:
+- url: https://api_rjs5967.co.kr/v1
+- url: http://10.20.0.5:5000/v1
+
+# api list
+tags:
+- name: partner/auth
+  description: Partner-Auth API
+- name: partner/dashboard
+  description: Partner-Dashboard API
+
+# api url
+paths:
+  /partner/auth/preflight: # api 주소 입력
+    post: # Method 설정 - post/get/put/delete
+      tags:
+      - partner/auth # api list 그룹 중 속할 곳
+      summary: Otp Check # api list 그룹의 요약내용
+      description: Checks whether Otp exists. <br> true if Otp exists false if not. # api 상세 설명 (HTML 코드 삽입가능)
+      requestBody:
+        $ref: '#/components/requestBodies/Preflight_Request' # request body data 경로 지정
+      responses:
+        "200": # response code 지정
+          description: successful operation
+          content:
+            application/json:
+              schema: # schema모델 설정 처럼 동일한 구조로 response data 형식 지정
+                type: boolean
+                default: false
+                x-content-type: application/json
+  /partner/auth/profile:
+    get:
+      tags:
+      - partner/auth
+      summary: Get Profile
+      description: Get profile information.
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartnerInfoModel'
+        "401":
+          description: Requires authentication and authorization
+      security: # 보안 설정
+      - PartnerAuth: # PartnerAuth 이름의 보안 생성
+        - PartnerAuth # securitySchemes에서 설정한 PartnerAuth를 사용
+
+# authortication
+securitySchemes:
+  PartnerAuth: # 보안 이름 설정
+    type: http
+    scheme: bearer # 인증방법 종류 작성
+    
+  ConsoleAuth:
+    type: http
+    scheme: bearer
+
+# schema(모델 설정)
+components:
+  schemas:
+    Error_Type:
+      type: boolean
+      default: false # 기본값 설정
+    Return_Body_Array_String:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error_Type' # 이미 생성한 schema를 호출
+        body:
+          type: array
+          items:
+            type: string
+          description: domain list
+  # requestBodies(Body Data설정)
+  requestBodies:
+    Preflight_Request:
+      description: Preflight
+      content:
+        application/json: # request body data type 설정
+          schema:
+            required: # 필수값 표시
+            - password
+            - username
+            type: object
+            properties:
+              username:
+                type: string
+                description: username
+                example: username # body data 입력 시 예제 값 설정
+              password:
+                type: string
+                description: SHA256
+                example: SHA256
+      required: true # data를 필수로 입력해야 하는지 설정

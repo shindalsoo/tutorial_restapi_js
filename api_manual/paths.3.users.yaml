@@ -1,0 +1,23 @@
+paths:
+  /api/users:
+    post:
+      tags:
+      - 관리자/사용자등록
+      summary: 관리자는 api를 사용할 사용자를 미리 등록합니다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserInput'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateUserResponse'
+        409:
+          description: Conflict
+        400:
+          description: Bad request

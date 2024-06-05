@@ -1,0 +1,10 @@
+paths:
+  /api/healthcheck:
+    get:
+      tags:
+      - 환경부문
+      summary: Ping 테스트
+      description: RESTApi 서버가 제대로 동작하는지? 상태체크합니다.
+      responses:
+        200:
+          description: 정상적으로 동작하고 있습니다.

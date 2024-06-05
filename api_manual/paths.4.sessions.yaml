@@ -1,0 +1,43 @@
+paths:
+  /api/sessions:
+    post:
+      tags:
+      - 인증 및 세션
+      summary: 최초, 사용자는 로그인을 합니다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSessionInput'
+      responses:
+        200:
+          description: Session created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateSessionResponse'
+        401:
+          description: Unauthorized
+    get:
+      tags:
+      - 인증 및 세션
+      summary: 접속해 있는 모든 사용자 목록을 보여줍니다.
+      responses:
+        200:
+          description: Get all sessions for current user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSessionResponse'
+        403:
+          description: Forbidden
+    delete:
+      tags:
+      - 인증 및 세션
+      summary: Barer Authorization으로 받은 Access Token 사용자를 세션에서 삭제합니다.
+      responses:
+        200:
+          description: Session deleted
+        403:
+          description: Forbidden
